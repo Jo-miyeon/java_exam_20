@@ -101,9 +101,10 @@ public class exam_3 {
 					Article article = articles.get(i);
 					if(id==targetId) {
 						existFlag=1;
-						System.out.println("====="+article.getId()+"=====번 게시물");
+						System.out.println("====="+article.getId()+"번 게시물====");
 						System.out.println("제목:"+article.getTitle());
 						System.out.println("내용:"+article.getBody());
+						System.out.println("===================");
 					}
 				}if(existFlag==2) {
 					System.out.println("게시물이 존재하지 않습니다.");
