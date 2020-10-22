@@ -14,9 +14,9 @@ public class exam_3 {
 		//Article a1 = new Article(1, "제목1", "내용1","익명");
 		
 		Date today = new Date();
-		SimpleDateFormat date = new SimpleDateFormat ("yyyy.MM.dd");
-		SimpleDateFormat time = new SimpleDateFormat ("hh:mm:ss:a");
-		int page_view=0;
+		SimpleDateFormat date = new SimpleDateFormat ("yyyy년MM월dd일");
+		SimpleDateFormat time = new SimpleDateFormat ("hh시mm분ss초");
+		
 		
 		int no=1;
 		int targetId;
@@ -95,16 +95,16 @@ public class exam_3 {
 				if(target==null) {
 					System.out.println("게시물이 존재하지 않습니다.");
 				}else {
+					target.setPage_view(target.getPage_view()+1);
 					System.out.println("====="+target.getId()+"번 게시물=====");
 					System.out.println("제목:"+target.getTitle());
 					System.out.println("내용:"+target.getBody());
 					System.out.println("작성자:"+target.getWritten());
 					System.out.println("등록날짜:"+date.format(today));
 					System.out.println("등록시간:"+time.format(today));
-					System.out.println("조회수:"+page_view);
+					System.out.println("조회수:"+target.getPage_view());
 					System.out.println("=====================");
 				}
-				page_view++;
 			}
 		}
 	}

@@ -5,6 +5,8 @@ public class Article {
 	private String title;
 	private String body;
 	private String written;
+	private int page_view=0;
+	
 	public Article() {
 		
 	}
@@ -37,6 +39,12 @@ public class Article {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getPage_view() {
+		return page_view;
+	}
+	public void setPage_view(int page_view) {
+		this.page_view = page_view;
 	}
 
 	
