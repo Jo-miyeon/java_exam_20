@@ -10,11 +10,12 @@ public class Article {
 	public Article() {
 		
 	}
-	public Article(int id,String title,String body,String written) {
+	public Article(int id,String title,String body,String written,int page_view) {
 		this.id=id;
 		this.body=body;
 		this.title=title;
 		this.written=written;
+		this.page_view=page_view;
 	}
 	public String getWritten() {
 		return written;
