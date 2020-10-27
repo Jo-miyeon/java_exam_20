@@ -102,6 +102,31 @@ public class exam_3 {
 					System.out.println("조회수:" + target.getPage_view());
 					System.out.println("=====================");
 				}
+				System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
+				int read_func = sc.nextInt();
+				if (read_func == 1) {
+					System.out.print("댓글 내용을 입력해주세요 : ");
+					String reply = sc.next();
+					String[] array_reply = new String[reply.length()];
+					System.out.println("댓글이 등록되었습니다.");
+
+					System.out.println("=====" + target.getId() + "번 게시물=====");
+					System.out.println("제목:" + target.getTitle());
+					System.out.println("내용:" + target.getBody());
+					System.out.println("작성자:" + target.getWritten());
+					System.out.println("작성일:" + date.format(today));
+					System.out.println("작성시간:" + time.format(today));
+					System.out.println("조회수:" + target.getPage_view());
+					System.out.println("=====================");
+
+					for (int i = 0; i < array_reply.length; i++) {
+						System.out.println("========댓글=========");
+						System.out.println("내용:" + reply);
+						System.out.println("작성자:" + target.getWritten());
+						System.out.println("작성일:" + date.format(today));
+						System.out.println("=====================");
+					}
+				}
 			} else if (str.equals("search")) {
 				ArrayList<Article> articles = dao.getArticles();
 				System.out.print("검색항목을 선택해주세요 1.제목, 2.내용, 3.제목+내용, 4.작성자:");
@@ -131,5 +156,10 @@ public class exam_3 {
 				}
 			}
 		}
+	}
+
+	private static int array_reply() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
