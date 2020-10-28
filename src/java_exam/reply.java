@@ -5,6 +5,8 @@ public class reply {
 	private int id;
 	private String nickname;
 	private String regDate;
+	private int ParentId;
+	
 	public String getBody() {
 		return body;
 	}
@@ -29,4 +31,11 @@ public class reply {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public int getParentId() {
+		return ParentId;
+	}
+	public void setParentId(int parentId) {
+		ParentId = parentId;
+	}
+	
 }

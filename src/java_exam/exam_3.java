@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class exam_3 {
-
+	static replyDao replydao = new replyDao();
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String str;
@@ -15,15 +15,47 @@ public class exam_3 {
 		Date today = new Date();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy년MM월dd일");
 		SimpleDateFormat time = new SimpleDateFormat("hh시mm분ss초");
-
 		int targetId;
+		
 		while (true) {
 			System.out.print("명령어를 입력해주세요:");
 			str = sc.next();
 			if (str.equals("exit")) {
 				System.out.println("종료되었습니다.");
 				break;
-			} else if (str.equals("add")) {
+			}else if(str.equals("signup")) {
+				Article a = new Article();
+				System.out.println("====회원가입을 진행합니다====");
+				System.out.print("아이디를 입력해주세요:");
+				String sign_up_id = sc.next();
+				a.setSign_up_id(sign_up_id);
+				System.out.print("비밀번호를 입력해주세요:");
+				String sign_up_pw = sc.next();
+				a.setSign_up_pw(sign_up_pw);
+				System.out.print("닉네임을 입력해주세요:");
+				String sign_up_nn = sc.next();
+				a.setSign_up_nn(sign_up_nn);
+				System.out.println("====회원가입이 완료되었습니다.====");
+			}else if(str.equals("signin")) {
+				ArrayList<Article> articles = dao.getArticles();
+				
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+					System.out.println("아이디:");
+					String sign_in_id = sc.next();
+					System.out.println("비밀번호:");
+					String sign_in_pw = sc.next();
+		
+					if (article.getSign_up_id().contains(sign_in_id)||article.getSign_up_pw().contains(sign_in_pw)) {
+						System.out.print("아이디:"+article.getSign_in_id());
+						System.out.print("비밀번호:"+article.getSign_in_pw());
+						System.out.println(article.getSign_up_nn()+"님 환영합니다!");
+					}else {
+						System.out.print("비밀번호를 틀렸거나 잘못된 회원정보입니다.");
+					}
+				}
+			}
+			else if (str.equals("add")) {
 
 				Article a = new Article();
 
@@ -93,14 +125,8 @@ public class exam_3 {
 					System.out.println("게시물이 존재하지 않습니다.");
 				} else {
 					target.setPage_view(target.getPage_view() + 1);
-					System.out.println("=====" + target.getId() + "번 게시물=====");
-					System.out.println("제목:" + target.getTitle());
-					System.out.println("내용:" + target.getBody());
-					System.out.println("작성자:" + target.getWritten());
-					System.out.println("등록날짜:" + date.format(today));
-					System.out.println("등록시간:" + time.format(today));
-					System.out.println("조회수:" + target.getPage_view());
-					System.out.println("=====================");
+					printArticle(target);
+
 				}
 				System.out.println("상세보기 기능을 선택해주세요(1. 댓글 등록, 2. 좋아요, 3. 수정, 4. 삭제, 5. 목록으로) :");
 				int read_func = sc.nextInt();
@@ -109,15 +135,7 @@ public class exam_3 {
 					String reply = sc.next();
 					String[] array_reply = new String[reply.length()];
 					System.out.println("댓글이 등록되었습니다.");
-
-					System.out.println("=====" + target.getId() + "번 게시물=====");
-					System.out.println("제목:" + target.getTitle());
-					System.out.println("내용:" + target.getBody());
-					System.out.println("작성자:" + target.getWritten());
-					System.out.println("작성일:" + date.format(today));
-					System.out.println("작성시간:" + time.format(today));
-					System.out.println("조회수:" + target.getPage_view());
-					System.out.println("=====================");
+					printArticle(target);
 
 					for (int i = 0; i < array_reply.length; i++) {
 						System.out.println("========댓글=========");
@@ -157,9 +175,14 @@ public class exam_3 {
 			}
 		}
 	}
-
-	private static int array_reply() {
-		// TODO Auto-generated method stub
-		return 0;
+	private static void printArticle(Article target) {
+		System.out.println("=====" + target.getId() + "번 게시물=====");
+		System.out.println("제목:" + target.getTitle());
+		System.out.println("내용:" + target.getBody());
+		System.out.println("작성자:" + target.getWritten());
+		// System.out.println("등록날짜:" + date.format(today));
+		// System.out.println("등록시간:" + time.format(today));
+		System.out.println("조회수:" + target.getPage_view());
+		System.out.println("=====================");
 	}
 }
