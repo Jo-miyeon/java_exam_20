@@ -7,49 +7,53 @@ import java.util.Scanner;
 
 public class exam_3 {
 	static replyDao replydao = new replyDao();
+	static MemberDao memberDao = new MemberDao();
+	static ArticleDao dao = new ArticleDao();
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		String str;
-		ArticleDao dao = new ArticleDao();
-
 		Date today = new Date();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy년MM월dd일");
 		SimpleDateFormat time = new SimpleDateFormat("hh시mm분ss초");
-		int targetId;
+		
 		
 		while (true) {
 			System.out.print("명령어를 입력해주세요:");
-			str = sc.next();
+			String str = sc.nextLine();
 			if (str.equals("exit")) {
 				System.out.println("종료되었습니다.");
 				break;
+			}else if(str.equals("help")) {
+				System.out.println("article [add: 게시물 추가 / list : 게시물 목록 조회 / read : 게시물 조회 / search : 검색]");
+				System.out.println("member [signup : 회원가입 / signin : 로그인 / findpass : 비밀번호 찾기 / findid : 아이디 찾기 / logout : 로그아웃 / myinfo : 나의 정보 확인및 수정]");
 			}else if(str.equals("signup")) {
-				Article a = new Article();
+				Member m = new Member();
 				System.out.println("====회원가입을 진행합니다====");
 				System.out.print("아이디를 입력해주세요:");
-				String sign_up_id = sc.next();
-				a.setSign_up_id(sign_up_id);
+				String sign_up_id = sc.nextLine();
+				m.setSign_up_id(sign_up_id);
 				System.out.print("비밀번호를 입력해주세요:");
-				String sign_up_pw = sc.next();
-				a.setSign_up_pw(sign_up_pw);
+				String sign_up_pw = sc.nextLine();
+				m.setSign_up_pw(sign_up_pw);
 				System.out.print("닉네임을 입력해주세요:");
-				String sign_up_nn = sc.next();
-				a.setSign_up_nn(sign_up_nn);
+				String sign_up_nn = sc.nextLine();
+				m.setSign_up_nn(sign_up_nn);
+				memberDao.insertMember(m);
 				System.out.println("====회원가입이 완료되었습니다.====");
 			}else if(str.equals("signin")) {
-				ArrayList<Article> articles = dao.getArticles();
+				ArrayList<Member> members = memberDao.getMembers();
 				
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					System.out.println("아이디:");
-					String sign_in_id = sc.next();
-					System.out.println("비밀번호:");
-					String sign_in_pw = sc.next();
+				for (int i = 0; i < members.size(); i++) {
+					Member m = members.get(i);
+					System.out.print("아이디:");
+					String sign_in_id = sc.nextLine();
+					System.out.print("비밀번호:");
+					String sign_in_pw = sc.nextLine();
 		
-					if (article.getSign_up_id().contains(sign_in_id)||article.getSign_up_pw().contains(sign_in_pw)) {
-						System.out.print("아이디:"+article.getSign_in_id());
-						System.out.print("비밀번호:"+article.getSign_in_pw());
-						System.out.println(article.getSign_up_nn()+"님 환영합니다!");
+					if (m.getSign_up_id().contains(sign_in_id)&&m.getSign_up_pw().contains(sign_in_pw)) {
+						System.out.println("아이디:"+m.getSign_up_id());
+						System.out.println("비밀번호:"+m.getSign_up_pw());
+						System.out.println(m.getSign_up_nn()+"님 환영합니다!");
 					}else {
 						System.out.print("비밀번호를 틀렸거나 잘못된 회원정보입니다.");
 					}
@@ -60,15 +64,15 @@ public class exam_3 {
 				Article a = new Article();
 
 				System.out.print("게시물 제목을 입력해주세요:");
-				String title = sc.next();
+				String title = sc.nextLine();
 				a.setTitle(title);
 
 				System.out.print("게시물 내용을 입력해주세요:");
-				String body = sc.next();
+				String body = sc.nextLine();
 				a.setBody(body);
 
 				System.out.print("게시물 작성자를 입력해주세요:");
-				String written = sc.next();
+				String written = sc.nextLine();
 				a.setWritten(written);
 
 				dao.insertArticle(a);
@@ -84,7 +88,7 @@ public class exam_3 {
 				}
 			} else if (str.equals("update")) {
 				System.out.print("수정할 게시물번호 선택해주세요: ");
-				targetId = sc.nextInt();
+				int targetId = sc.nextInt();
 				Article target = dao.getAricleById(targetId);
 				if (target == null) {
 					System.out.print("게시물이 없습니다.");
@@ -102,7 +106,7 @@ public class exam_3 {
 				}
 			} else if (str.equals("delete")) {
 				System.out.print("삭제할 게시물번호를 선택해주세요: ");
-				targetId = sc.nextInt();
+				int targetId = sc.nextInt();
 				ArrayList<Article> articles = dao.getArticles();
 				Article target = dao.getAricleById(targetId);
 				if (target == null) {
@@ -119,7 +123,7 @@ public class exam_3 {
 				}
 			} else if (str.equals("read")) {
 				System.out.println("원하는 게시물의 번호를 선택해주세요:");
-				targetId = sc.nextInt();
+				int targetId = sc.nextInt();
 				Article target = dao.getAricleById(targetId);
 				if (target == null) {
 					System.out.println("게시물이 존재하지 않습니다.");
