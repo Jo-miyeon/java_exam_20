@@ -29,4 +29,13 @@ public class MemberDao {
 		}
 		return null;
 	}
+	public Member getMemberById(int id) {
+		for(int i=0;i<members.size();i++) {
+			Member m = members.get(i);
+			if(m.getId()==id) {
+				return m;
+			}
+		}
+	return null;
+}
 }

@@ -1,28 +1,30 @@
 package java_exam;
 
+import java.util.ArrayList;
+
 public class Article {
 	private int id;
 	private String title;
 	private String body;
-	private String written;
+	private int mid;
 	private int page_view=0;
 	
 	public Article() {
 		
 	}
-	public Article(int id,String title,String body,String written,int page_view) {
+	public Article(int id,String title,String body,int mid,int page_view) {
 		this.id=id;
 		this.body=body;
 		this.title=title;
-		this.written=written;
+		this.mid=mid;
 		this.page_view=page_view;
 	}
 	
-	public String getWritten() {
-		return written;
+	public int getMid() {
+		return mid;
 	}
-	public void setWritten(String written) {
-		this.written = written;
+	public void setMid(int mid) {
+		this.mid = mid;
 	}
 	public int getId() {
 		return id;
