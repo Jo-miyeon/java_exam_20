@@ -7,6 +7,14 @@ public class reply {
 	private String regDate;
 	private int ParentId;
 	
+	public reply(String body, int id, String nickname, String regDate, int parentId) {
+		super();
+		this.body = body;
+		this.id = id;
+		this.nickname = nickname;
+		this.regDate = regDate;
+		ParentId = parentId;
+	}
 	public String getBody() {
 		return body;
 	}

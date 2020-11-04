@@ -10,20 +10,14 @@ public class App {
 	MemberDao memberDao = new MemberDao();
 	ArticleDao dao = new ArticleDao();
 	Member loginedMember = null;
-
+	LikeDao likeDao = new LikeDao();
 	public void start() {
 		Scanner sc = new Scanner(System.in);
-
-		Date today = new Date();
-		SimpleDateFormat date = new SimpleDateFormat("yyyy년MM월dd일");
-		SimpleDateFormat time = new SimpleDateFormat("hh시mm분ss초");
-
 		while (true) {
 			if (loginedMember == null) {
 				System.out.print("명령어를 입력해주세요:");
 			} else {
-				System.out.print("명령어를 입력해주세요 [" + loginedMember.getSign_up_id() + "(" + loginedMember.getSign_up_nn()
-						+ ")" + "] :");
+				System.out.print("명령어를 입력해주세요 [" + loginedMember.getSign_up_id() + "(" + loginedMember.getSign_up_nn()+ ")" + "] :");
 			}
 			String str = sc.nextLine();
 			if (str.equals("exit")) {
@@ -128,7 +122,7 @@ public class App {
 				int read_func = Integer.parseInt(sc.nextLine());
 				if (read_func == 1) {
 					System.out.print("댓글 내용을 입력해주세요 : ");
-					String reply = sc.next();
+					String reply = sc.nextLine();
 					String[] array_reply = new String[reply.length()];
 					System.out.println("댓글이 등록되었습니다.");
 					printArticle(target);
@@ -137,18 +131,26 @@ public class App {
 						System.out.println("========댓글=========");
 						System.out.println("내용:" + reply);
 						//System.out.println("작성자:" + target.getWritten());
-						System.out.println("작성일:" + date.format(today));
+						//System.out.println("작성일:" + date.format(today));
 						System.out.println("=====================");
 					}
 				}else if(read_func==2) {
-					//좋아요 체크
-					target.getId()
-					if(likeFlag==0){
-						
-						System.out.println("해당 게시물을 좋아합니다.");
-					}else if(likeFlag==1) {
-						System.out.println("해당 게시물의 좋아요를 해제합니다.");
+					if (!isLogin()) {
+						continue;
 					}
+					//좋아요 체크
+					Like rst = likeDao.getLikeByArticleAndMemberId(target.getId(),loginedMember.getId());
+					if(rst==null) { 
+						Like like = new Like(target.getId(),loginedMember.getId());
+						likeDao.insertLike(like);
+						System.out.println("좋아요를 체크했습니다.");
+					}else {
+						//해제-삭제
+						likeDao.removeLike(rst);
+						System.out.println("좋아요를 해제했습니다.");
+					}
+					
+					
 				}else if(read_func==3) {
 					if(!isLogin() || !isMyArticle(target)) {
 						continue;
@@ -203,6 +205,12 @@ public class App {
 						}
 					}
 				}
+			}else if(str.equals("article sort")) {
+				System.out.println("정렬 대상을 선택해주세요. (id : 번호) :");
+				String sortId = sc.nextLine();
+				System.out.println("정렬 방법을 선택해주세요. (asc : 오름차순, desc : 내림차순) :");
+				String sortMet = sc.nextLine();
+				
 			}
 		}
 	}
@@ -225,7 +233,7 @@ public class App {
 		// System.out.println("등록날짜:" + date.format(today));
 		// System.out.println("등록시간:" + time.format(today));
 		System.out.println("조회수:" + target.getPage_view());
-		System.out.println("좋아요"+target.getLike());
+		//System.out.println("좋아요"+target.getLike());
 		System.out.println("=====================");
 	}
 

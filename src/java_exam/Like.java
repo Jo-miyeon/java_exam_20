@@ -1,18 +1,16 @@
 package java_exam;
 
 public class Like {	
-	private int parentId;//누구의 조아요를 체크인지 해제인지
-	private int id;
+	private int parentId;//원글 번호
+	private int id;//조아요 번호
 	private int likeFlag; //체크햇나안햇나
-	private int checkMemberId;
-	
-	
-	public Like(int parentId, int id, int likeFlag, int checkMemberId) {
-		this.parentId = parentId;
-		this.id = id;
-		this.likeFlag = likeFlag;
-		this.checkMemberId = checkMemberId;
+	private int checkMemberId; //체크유저번호 멤버id
+
+	public Like(int parentId, int checkMemberId) {
+		this.parentId=parentId;
+		this.checkMemberId=checkMemberId;
 	}
+
 	public int getParentId() {
 		return parentId;
 	}

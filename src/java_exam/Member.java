@@ -6,6 +6,13 @@ public class Member {
 	private String sign_up_pw;
 	private String sign_up_nn;
 	
+	public Member() {
+		super();
+		this.id = id;
+		this.sign_up_id = sign_up_id;
+		this.sign_up_pw = sign_up_pw;
+		this.sign_up_nn = sign_up_nn;
+	}
 	public int getId() {
 		return id;
 	}
