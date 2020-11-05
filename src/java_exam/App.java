@@ -2,6 +2,7 @@ package java_exam;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -11,6 +12,9 @@ public class App {
 	ArticleDao dao = new ArticleDao();
 	Member loginedMember = null;
 	LikeDao likeDao = new LikeDao();
+	Sort sort = new Sort();
+	comparator2 com = new comparator2();
+	
 	public void start() {
 		Scanner sc = new Scanner(System.in);
 		while (true) {
@@ -206,11 +210,13 @@ public class App {
 					}
 				}
 			}else if(str.equals("article sort")) {
+				ArrayList<Article> articles = dao.getArticles();
 				System.out.println("정렬 대상을 선택해주세요. (id : 번호) :");
-				String sortId = sc.nextLine();
+				String sort_obj = sc.nextLine();
 				System.out.println("정렬 방법을 선택해주세요. (asc : 오름차순, desc : 내림차순) :");
-				String sortMet = sc.nextLine();
+				String sort_method = sc.nextLine();
 				
+				com.sort_method=sort_method;
 			}
 		}
 	}
