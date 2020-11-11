@@ -84,7 +84,8 @@ public class App {
 				System.out.println("게시물이 등록되었습니다.");
 			} else if (str.equals("article list")) {
 				ArrayList<Article> articles = dao.getArticles();
-				printArticles(articles);
+				Pagination pagination = new Pagination();
+				printArticles(articles,pagination);
 			} else if (str.equals("article update")) {
 				System.out.print("수정할 게시물번호 선택해주세요: ");
 				int targetId = Integer.parseInt(sc.nextLine());
@@ -220,7 +221,7 @@ public class App {
 				com.sort_method = sort_method;
 			} else if (str.equals("article page")) {
 				ArrayList<Article> articles = dao.getArticles();
-				printArticles(articles);
+				printArticles(articles,);
 				System.out.println("페이징 명령어를 입력해주세요 ((prev : 이전, next : 다음, prevPage : 이전페이지, nextPage : 다음페이지, count : 페이지당 게시물 수 go : 선택, back : 뒤로가기):");
 				String page_order = sc.nextLine();
 				if (page_order.equals("nextPage")) {
@@ -230,33 +231,7 @@ public class App {
 		}
 	}
 
-	private void printArticles(ArrayList<Article> articleList) {
-		int currentPageNo = 123;
-		int totalCntOfItems = articles.size();
-		int startPageNo = 1;
-		int itemsCntPerPage = 3;
-		int pageCntPerBlock = 5;
-		int endPageNo = (int) Math.ceil((double) totalCntOfItems / itemsCntPerPage);
-
-		if (currentPageNo < startPageNo) {
-			currentPageNo = startPageNo;
-		}
-		if (currentPageNo > endPageNo) {
-			currentPageNo = endPageNo;
-		}
-		int currentPageBlock = (int) Math.ceil((double) currentPageNo / pageCntPerBlock);
-		int startPageNoInBlock = (currentPageBlock - 1) * pageCntPerBlock + 1;
-		int endPageNoInBlock = startPageNoInBlock + pageCntPerBlock - 1;
-
-		if (endPageNoInBlock > endPageNo) {
-			endPageNoInBlock = endPageNo;
-		}
-		int startIndex = (currentPageNo - 1) * itemsCntPerPage;
-		int endIndex = startIndex + itemsCntPerPage;
-
-		if (endIndex > totalCntOfItems) {
-			endIndex = totalCntOfItems;
-		}
+	private void printArticles(ArrayList<Article> articleList,int currentPageNo) {
 		for (int i = 0; i < articleList.size(); i++) {
 			Article article = articleList.get(i);
 			System.out.println("번호 : " + article.getId());
@@ -266,15 +241,7 @@ public class App {
 			System.out.println("조회수 : " + article.getPage_view());
 			System.out.println("===================");
 		}
-		for (int i = startPageNoInBlock; i <= endPageNoInBlock; i++) {
-
-			if (i == currentPageNo) {
-				System.out.print("[" + i + "] ");
-			} else {
-				System.out.print(i + " ");
-			}
-		}
-		System.out.println("");
+		
 	}
 
 	private void printArticle(Article target) {

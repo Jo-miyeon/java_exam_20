@@ -1,6 +1,11 @@
 package java_exam;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 //data access object
 public class ArticleDao {
@@ -9,7 +14,25 @@ public class ArticleDao {
 	public ArticleDao() { //articledao를 만드는순간 객체자체가세팅되서옴,,(?)
 		articles = new ArrayList<>();
 	}
-	
+	public void writeJsonFile(JSONObject jobj) {
+		try {
+			long id = (long)jobj.get("id");
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	public JSONObject articleToJsonFile(Article article) {
+		JSONObject obj = new JSONObject();
+		String jsonText;
+		obj.put("id", article.getId());
+		obj.put("title",article.getTitle());
+		obj.put("boby", article.getBody());
+		obj.put("mid", article.getMid());
+		obj.put("hit", article.getPage_view());
+		return obj;
+		
+	}
 	public void insertArticle(Article a) {
 		a.setId(no); // 아이디 타이틀등을 따로 저장안해도됨
 		no++;
